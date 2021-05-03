@@ -9,6 +9,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  TextEditingController _controller = TextEditingController();
   ApiServices apiServices = ApiServices();
   List<String> currencies;
   String from;
@@ -74,6 +75,7 @@ class _HomePageState extends State<HomePage> {
                     )
                   ]),
                   child: TextField(
+                    controller: _controller,
                     onSubmitted: convert,
                     decoration: InputDecoration(
                       border: InputBorder.none,
@@ -124,6 +126,7 @@ class _HomePageState extends State<HomePage> {
                         setState(() {
                           from = to;
                           to = change;
+                          convert(_controller);
                         });
                       },
                       child: Icon(
@@ -196,6 +199,25 @@ class _HomePageState extends State<HomePage> {
                 SizedBox(
                   height: 30,
                 ),
+                Container(
+                    height: 50,
+                    width: 100,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors.amber,
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          convert(_controller.text);
+                        });
+                      },
+                      child: Text(
+                        'Convert',
+                        style: TextStyle(
+                          fontSize: 16,
+                        ),
+                      ),
+                    ))
               ],
             ),
           ),
